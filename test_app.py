@@ -1,14 +1,22 @@
 import unittest
+from types import SimpleNamespace
+from unittest.mock import patch
 
-from app import parse_value
+from app import run_command
 
 
-class ParseValueTests(unittest.TestCase):
-    def test_parses_integer_literal(self):
-        self.assertEqual(parse_value("42"), 42)
-
-    def test_parses_list_literal(self):
-        self.assertEqual(parse_value("[1, 2, 3]"), [1, 2, 3])
+class RunCommandTests(unittest.TestCase):
+    @patch("app.subprocess.run")
+    def test_runs_argument_list_without_a_shell(self, run):
+        run.return_value = SimpleNamespace(stdout="ok\n")
+        self.assertEqual(run_command(["echo", "ok"]), "ok")
+        run.assert_called_once_with(
+            ["echo", "ok"],
+            shell=False,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
 
 
 if __name__ == "__main__":

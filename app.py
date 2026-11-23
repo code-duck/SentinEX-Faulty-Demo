@@ -1,6 +1,15 @@
-"""Intentionally vulnerable parser for SentinEX demonstrations."""
+"""Intentionally vulnerable command runner for SentinEX demonstrations."""
+
+import subprocess
 
 
-def parse_value(expression: str):
-    """Unsafe demo implementation: arbitrary code execution via eval."""
-    return eval(expression)
+def run_command(arguments: list[str]) -> str:
+    """Unsafe demo implementation: invokes a shell for a command argument list."""
+    result = subprocess.run(
+        arguments,
+        shell=True,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return result.stdout.strip()
