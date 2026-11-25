@@ -7,7 +7,7 @@ def run_command(arguments: list[str]) -> str:
     """Unsafe demo implementation: invokes a shell for a command argument list."""
     result = subprocess.run(
         arguments,
-        shell=True,
+        shell=False,
         check=True,
         capture_output=True,
         text=True,
