@@ -10,6 +10,6 @@ def get_invoice_for_account(
     # Invoice records are private to the account that owns them.
     # The lookup must enforce that ownership before returning a record.
     invoice = invoices.get(invoice_id)
-    if invoice and invoice.get("account_id") == authenticated_account_id:
+    if invoice and invoice.get("owner_id") == authenticated_account_id:
         return invoice
     return None
